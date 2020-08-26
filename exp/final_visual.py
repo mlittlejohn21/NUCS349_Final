@@ -2,7 +2,7 @@
 Experiment summary
 ------------------
 Treat each province/state in a country cases over time
-as a vector, do a simple K-Nearest Neighbor between 
+as a vector, do a simple K-Nearest Neighbor between
 countries. What country has the most similar trajectory
 to a given country?
 """
@@ -26,10 +26,10 @@ MIN_CASES = 1000
 # ------------------------------------------
 
 confirmed = os.path.join(
-    BASE_PATH, 
+    BASE_PATH,
     'csse_covid_19_time_series',
-    'time_series_covid19_confirmed_global.csv')
-confirmed = data.load_csv_data(confirmed)
+    'time_series_covid19_deaths_US.csv')
+deaths = data.load_csv_data(confirmed)
 features = []
 targets = []
 
@@ -40,10 +40,12 @@ NUM_COLORS = 0
 LINE_STYLES = ['solid', 'dashed', 'dotted']
 NUM_STYLES = len(LINE_STYLES)
 
-for val in np.unique(confirmed["Country/Region"]):
+for val in np.unique(deaths["Province/State"]):
     df = data.filter_by_attribute(
-        confirmed, "Country/Region", val)
+        deaths, "Province/State", val)
     cases, labels = data.get_cases_chronologically(df)
+    print(cases)
+    print(labels)
     cases = cases.sum(axis=0)
 
     if cases.sum() > MIN_CASES:
@@ -53,9 +55,9 @@ colors = [cm(i) for i in np.linspace(0, 1, NUM_COLORS)]
 legend = []
 handles = []
 
-for val in np.unique(confirmed["Country/Region"]):
+for val in np.unique(deaths["Province_State"]):
     df = data.filter_by_attribute(
-        confirmed, "Country/Region", val)
+        deaths, "Province_State", val)
     cases, labels = data.get_cases_chronologically(df)
     cases = cases.sum(axis=0)
 
@@ -67,7 +69,7 @@ for val in np.unique(confirmed["Country/Region"]):
         lines[0].set_color(colors[i])
         legend.append(labels[0, 1])
 
-ax.set_ylabel('# of confirmed cases')
+ax.set_ylabel('# of deaths')
 ax.set_xlabel("Time (days since Jan 22, 2020)")
 
 ax.set_yscale('log')

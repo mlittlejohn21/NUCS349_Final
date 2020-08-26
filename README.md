@@ -1,5 +1,10 @@
+# Exploring Coronavirus data
+This is my repository for my CS 349 final project. In this project, I wanted to see how my homework implmentation
+ of KNN classified the death time series and confirmed cases time series for the US. Do the trends for
+ confirmed cases follow similar trends for death rates? How will their nearest neighbors change? These 
+ are the questions that I will be trying to answer with my experiment. 
+ 
 # Exploring Coronavirus data 
-
 This repository contains some basic set up for exploration of the JHU data regarding
 the Coronavirus pandemic of 2020.
 
